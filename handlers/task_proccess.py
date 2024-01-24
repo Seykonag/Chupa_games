@@ -66,6 +66,7 @@ async def compare_answer_normal(message: Message, state: FSMContext):
 
         if message.text.lower() == easy_task_list.get(rand_easy_task):
             await Models.edit_profile(message.from_user.id, easy_task)
+            await state.clear()
             await message.answer(f'Вы отгадали, ваш баланс теперь '
                                  f'{Models.return_value(message.from_user.id)} '
                                  + emoji.emojize(':lollipop:'),
@@ -79,6 +80,7 @@ async def compare_answer_normal(message: Message, state: FSMContext):
 
         if message.text.lower() == normal_task_list.get(rand_normal_task):
             await Models.edit_profile(message.from_user.id, normal_task)
+            await state.clear()
             await message.answer(f'Вы отгадали, ваш баланс теперь '
                                  f'{Models.return_value(message.from_user.id)} '
                                  + emoji.emojize(':lollipop:'),
@@ -91,6 +93,7 @@ async def compare_answer_normal(message: Message, state: FSMContext):
 
         if message.text.lower() == hard_task_list.get(rand_hard_task):
             await Models.edit_profile(message.from_user.id, hard_task)
+            await state.clear()
             await message.answer(f'Вы отгадали, ваш баланс теперь '
                                  f'{Models.return_value(message.from_user.id)} '
                                  + emoji.emojize(':lollipop:'),

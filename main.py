@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 
-from handlers import user_commands, user_messages, task_proccess
+from handlers import user_commands, user_messages, task_proccess, unknown_message
 from game import start_game
 from data import Models
 
@@ -17,7 +17,8 @@ async def main():
     dp.include_routers(user_commands.router,
                        user_messages.router,
                        task_proccess.router,
-                       start_game.router)
+                       start_game.router,
+                       unknown_message.router)
 
     await Models.database_start()
 

@@ -14,13 +14,15 @@ router = Router()
 
 
 @router.message(F.text.lower() == emoji.emojize('📄') + 'инструкция')
-async def instructions():
-    pass
+async def instructions(message: Message):
+    await message.answer("Инструкция:")
+    await message.answer("На данный момент инструкция в разработке")
 
 
 @router.message(F.text.lower() == emoji.emojize('📃') + 'правила')
-async def rules():
-    pass
+async def rules(message: Message):
+    await message.answer("Правила:")
+    await message.answer("На данный момент правила в разработке")
 
 
 @router.message(F.text.lower() == emoji.emojize('💼') + 'задания')

@@ -12,7 +12,7 @@ async def database_start():
 
 
 async def create_profile(user_id):
-    user = cur.execute("SELECT 1 FROM profile WHERE user_id == '{key}'".format(key=user_id)).fetchone()
+    user = check_user(user_id)
 
     if not user:
         cur.execute("INSERT INTO profile VALUES(?, ?)",
@@ -27,5 +27,9 @@ async def edit_profile(user_id, value):
 
 
 def return_value(user_id):
-    result = cur.execute(f"SELECT * FROM profile WHERE user_id='{user_id}'").fetchone()
+    result = cur.execute(f"SELECT * FROM profile WHERE user_id='{userпше_id}'").fetchone()
     return result[1]
+
+
+def check_user(user_id):
+    return cur.execute("SELECT 1 FROM profile WHERE user_id == '{key}'".format(key=user_id)).fetchone()
