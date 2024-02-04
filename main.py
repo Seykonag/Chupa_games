@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 
 from handlers import user_commands, user_messages, task_proccess, unknown_message
 from game import start_game
-from data import Models
 
 import asyncio
 import os
@@ -19,8 +18,6 @@ async def main():
                        task_proccess.router,
                        start_game.router,
                        unknown_message.router)
-
-    await Models.database_start()
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

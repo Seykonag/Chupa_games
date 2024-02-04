@@ -1,35 +1,28 @@
-import sqlite3 as sq
-
-
-async def database_start():
-    global database, cur
-
-    database = sq.connect('data/Chupa_games.db')
-    cur = database.cursor()
-
-    cur.execute("CREATE TABLE IF NOT EXISTS profile(user_id TEXT PRIMARY KEY, balance INT)")
-    database.commit()
+import requests
+import json
 
 
 async def create_profile(user_id):
-    user = check_user(user_id)
-
-    if not user:
-        cur.execute("INSERT INTO profile VALUES(?, ?)",
-                    (user_id, 0))
-        database.commit()
+    requests.post('https://chupa-pupa-29ab2bbfb5f8.herokuapp.com//createProfile/'
+                  + str(user_id))
 
 
 async def edit_profile(user_id, value):
-    cur.execute("UPDATE profile SET balance = (balance + ?) WHERE user_id == ? ",
-                (value, user_id))
-    database.commit()
+    headers = {'Content-Type': 'application/json'}
+    body = [user_id, value]
+    requests.post('https://chupa-pupa-29ab2bbfb5f8.herokuapp.com/editValue',
+                  json=body, headers=headers)
 
 
 def return_value(user_id):
-    result = cur.execute(f"SELECT * FROM profile WHERE user_id='{userпше_id}'").fetchone()
-    return result[1]
+    response = requests.get('https://chupa-pupa-29ab2bbfb5f8.herokuapp.com/balanceValue/'
+                            + str(user_id))
+    result = json.loads(response.text)
+    return result['balance']
 
 
 def check_user(user_id):
-    return cur.execute("SELECT 1 FROM profile WHERE user_id == '{key}'".format(key=user_id)).fetchone()
+    response = requests.get('https://chupa-pupa-29ab2bbfb5f8.herokuapp.com/checkUser/'
+                            + str(user_id))
+    result = json.loads(response.text)
+    return result['check']
